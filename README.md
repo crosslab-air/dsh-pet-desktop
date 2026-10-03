@@ -1,4 +1,4 @@
-# dsh-pet 桌面版 · 独立桌宠（dsh-pet-desktop）
+# DSH蓝色大肥鱼桌宠 · 独立桌面版（dsh-pet-desktop）
 
 ![点击回应 · 开心跃动](assets/demo/dianji-huiying-kaixin-yuedong.gif)
 
@@ -8,7 +8,7 @@
 >
 > ```
 > Copyright (c) 2026 PC2005-cloud
-> Copyright (c) 2026 念屿
+> Copyright (c) 2026 crosslab-air
 > ```
 
 > 桌面版不支持「对话」与「工作状态联动」（这两项依赖 DSH 宿主：前者要宿主 LLM，后者要 DSH 会话事件，桌面环境没有数据源）；周期自动「碎碎念」也已关闭，但右键手动触发仍可用（走本地句库，无需联网、无需 Key）。
@@ -57,7 +57,7 @@ git clone <你的仓库地址> dsh-pet-desktop
 |---|---|
 | 下载 Electron 运行时 | 约 300MB，走 npmmirror 镜像，通常 1–5 分钟，窗口里会打印下载进度 |
 | 桌宠出现在桌面右上角 | 那个黑框**由它自己退出** —— 它不承载桌宠进程，关掉也不影响桌宠 |
-| **桌面自动出现「dsh-pet 桌宠」图标** | 程序自动创建的（见 `standalone/app/main.cjs` 的 `createShortcut()`），**以后就靠它启动** |
+| **桌面自动出现「DSH蓝色大肥鱼桌宠」图标** | 程序自动创建的（见 `standalone/app/main.cjs` 的 `createShortcut()`），**以后就靠它启动** |
 
 **③ 填 API Key**（不填也能跑，只是没有余额气泡）
 
@@ -67,7 +67,7 @@ git clone <你的仓库地址> dsh-pet-desktop
 
 ### 第二步 · 日常使用（以后每次）
 
-**只做一件事：双击桌面上的「dsh-pet 桌宠」图标。**
+**只做一件事：双击桌面上的「DSH蓝色大肥鱼桌宠」图标。**
 
 - **零控制台窗口** —— 快捷方式直接调 `electron.exe` 加载 `standalone/app`，不经过 cmd
 - 桌宠同时常驻**系统托盘**（右下角小鲸鱼图标）：左键双击开设置，右键是完整菜单
@@ -196,7 +196,7 @@ electron/    Electron 运行时（首次自动下载）
 - **怎么退出** → 右键桌宠 →「退出桌宠程序」，或托盘图标右键 →「退出」。注意：**关掉设置窗口只是关了设置**，桌宠还在跑，托盘图标也还在。
 - **怎么卸载** → 先退出桌宠，然后删掉整个文件夹 + 手动删掉桌面那个快捷方式即可（托盘菜单只能**创建**快捷方式，删除要自己动手）。
 - **桌面图标不见了 / 换了文件夹位置** → 双击一次 `启动桌宠.cmd` 会自动重建；或桌宠跑起来后，托盘图标右键 →「创建桌面快捷方式」。
-- **它到底叫什么** → 桌面图标名、托盘悬停提示、托盘退出项、设置窗口标题栏**统一显示「dsh-pet 桌宠」**，没有第二套称呼。想换名字就改 `standalone/app/main.cjs` 顶部的 `APP_TITLE` 与 `SHORTCUT_NAME`。
+- **它到底叫什么** → 桌面图标名、托盘悬停提示、托盘退出项、设置窗口标题栏**统一显示「DSH蓝色大肥鱼桌宠」**，没有第二套称呼。想换名字就改 `standalone/app/main.cjs` 顶部的 `APP_TITLE` 与 `SHORTCUT_NAME`。
 - **杀软报毒** → Electron 应用未签名时的常见误报。
 - **想多开几只** → 编辑 `standalone/config.jsonc` 的 `pets` 数组（`id` 必须唯一），保存后到**设置窗口 →「程序」卡片 → 重启桌宠**（托盘菜单里没有重启项）。
 - **想自定义台词 / 动画池 / 物理手感** → 同上，都在 `standalone/config.jsonc` 里。
@@ -217,12 +217,11 @@ electron/    Electron 运行时（首次自动下载）
 
 ```
 Copyright (c) 2026 PC2005-cloud
-Copyright (c) 2026 念屿
+Copyright (c) 2026 crosslab-air
 ```
 
 - 原作者：**PC2005-cloud** —— <https://github.com/PC2005-cloud/dsh-pet>
-<!-- 发布前请把下面这行的 <your-github-username> 换成你的 GitHub 用户名（或整行删掉） -->
-- 桌面版：**念屿** —— <https://github.com/your-github-username>
+- 桌面版：**crosslab-air** —— <https://github.com/crosslab-air>
 
 ⚠️ **素材（动画 / 演示动图 / 表情包 / 字体 / 提示词）不适用 MIT**：上游声明允许开源使用、**禁止商用**。
 二创约定：任何介绍、展示、分发本作品的地方，须附上原作者地址
