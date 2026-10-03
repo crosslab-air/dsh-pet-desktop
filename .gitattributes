@@ -1,0 +1,21 @@
+# 统一行尾策略
+#
+# 上游（dsh-pet）要求文本文件一律 LF 入库、LF 检出，避免 CRLF 噪声。
+# 但 Windows 下的 .cmd / .ps1 用 CRLF 更稳（部分 cmd.exe 解析场景对纯 LF 敏感），
+# 所以这两类单独指定 eol=crlf。
+
+* text=auto eol=lf
+
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# 二进制资源：不做任何行尾转换
+*.png  binary
+*.ico  binary
+*.gif  binary
+*.jpg  binary
+*.webm binary
+*.mp3  binary
+*.ttf  binary
+*.mkv  binary
