@@ -1,5 +1,5 @@
 /**
- * standalone/app/main.cjs —— 「DS小鲸鱼」桌面软件外壳（进程唯一入口）
+ * standalone/app/main.cjs —— 「DSH蓝色大肥鱼桌宠」桌面软件外壳（进程唯一入口）
  * ============================================================================
  * 这一层解决的正是"像个软件"这件事：**双击图标就开、没有控制台窗口、关设置窗口不影响桌宠、
  * 在桌宠身上右键「退出桌宠程序」才彻底关闭**。它是一套**单进程**外壳：
@@ -67,13 +67,14 @@ const ICON_SRC = path.join(ROOT, 'dsh-pet', 'assets', 'logo.png');
 const SETTINGS_HTML = path.join(APP_DIR, 'settings.html');
 const SETTINGS_PRELOAD = path.join(APP_DIR, 'preload-settings.cjs');
 
-const APP_TITLE = 'DS小鲸鱼';
+// 程序显示名：托盘悬停提示、设置窗口标题栏、退出菜单项都用它。
+// 与桌面快捷方式名（SHORTCUT_NAME）保持一致 —— 一个产品只该有一个称呼。
+const APP_TITLE = 'DSH蓝色大肥鱼桌宠';
 const APP_VERSION = '1.0.0';
-const AUMID = 'com.dshpet.whale';
+const AUMID = 'com.dshpet.desktop';
 // 桌面快捷方式名（托盘菜单里可随时创建 / 更新）。
-// 刻意没有用「DS小鲸鱼.lnk」这个名字，是为了避免与本机原有的旧桌宠快捷方式重名冲突；
-// 你如果只有一个桌宠，改名成任何喜欢的名字都不影响功能。
-const SHORTCUT_NAME = 'dsh-pet 桌宠.lnk';
+// 首次启动若桌面还没有它，会自动建一个（见文件末尾 whenReady 分支）。
+const SHORTCUT_NAME = 'DSH蓝色大肥鱼桌宠.lnk';
 const PREFERRED_PORT = 8231; // 与预置 DSH_PET_CONFIG_URL 保持一致（见文件头①）
 const LOG_ROTATE_BYTES = 2 * 1024 * 1024;
 
@@ -196,7 +197,7 @@ app.on('second-instance', () => {
 // ---------------------------------------------------------------------------
 // 偏好（data/prefs.json）
 // ---------------------------------------------------------------------------
-// sound / vol / soundSet 三项对齐旧桌宠 DS 小鲸鱼的 widget 配置（sound=true / vol=0.68 / soundSet="duck"）
+// sound / vol / soundSet 三项默认值：默认开音效、音量 0.68、素材组 "duck"（都可在设置窗口改）
 const PREFS_DEFAULT = {
   scale: 1,
   autostart: false,

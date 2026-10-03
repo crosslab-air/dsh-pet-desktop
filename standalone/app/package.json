@@ -1,8 +1,8 @@
 {
   "name": "ds-whale-desktop",
-  "productName": "DS小鲸鱼",
+  "productName": "DSH蓝色大肥鱼桌宠",
   "version": "1.0.0",
   "private": true,
-  "description": "DS小鲸鱼桌宠 —— 脱离 DSH 的独立桌面版（Electron 软件形态）",
+  "description": "DSH蓝色大肥鱼桌宠 —— 脱离 DSH 的独立桌面版（Electron 软件形态）",
   "main": "main.cjs"
 }

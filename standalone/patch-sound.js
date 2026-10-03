@@ -7,10 +7,11 @@
  *   · sprite.js 反而显式把所有 <video> 设成 muted（自动播放策略需要）。
  * 所以音效不能从动画里"解静音"得到，必须自己播。
  *
- * 音效来源：本地服务的 /sound/<音效组>-<press|release>.mp3（standalone/sound/）。
+ * 音效来源：本地服务的 /sound/<音效组>-<press|release>.mp3（standalone/sound/，4 枚原创合成音，
+ * 生成脚本见 scripts/make-sounds.py；想换素材直接替换同名文件即可）。
  * 页面 CSP 已允许（index.html: media-src 'self' http: https: blob:），无需改上游。
  *
- * 触发时机（对齐旧桌宠 DS 小鲸鱼的手感）：
+ * 触发时机（按下 / 松开各一声，手感自然）：
  *   ① 左键在宠物命中区（.pet-hit）按下 → 播「按下」音
  *   ② 左键松开 → 播「松开」音（仅当刚才那一下按在宠物上，避免点空白处出声）
  *   拖拽同理：拿起响一下、放下响一下。
