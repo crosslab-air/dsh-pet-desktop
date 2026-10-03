@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; media-src http:; connect-src 'none'"
+    />
+    <title>DS小鲸鱼 · 设置</title>
+    <style>
+      :root {
+        --bg: #f4f6fb;
+        --card: #ffffff;
+        --line: #e6eaf3;
+        --text: #1f2430;
+        --muted: #6b7280;
+        --brand: #2b63ff;
+        --brand-soft: rgba(43, 99, 255, 0.1);
+        --peak: #e53935;
+        --idle: #2e9e4f;
+        --danger: #d94f3d;
+        --radius: 14px;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Microsoft YaHei UI', 'Segoe UI', system-ui, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .wrap { max-width: 720px; margin: 0 auto; padding: 22px 22px 40px; }
+
+      /* ---------- 头部 ---------- */
+      .head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+      .logo {
+        width: 56px; height: 56px; border-radius: 16px; flex: none;
+        background: linear-gradient(140deg, #4f8bff, #2b63ff 60%, #1d3fbf);
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 26px; box-shadow: 0 6px 18px rgba(43, 99, 255, 0.28);
+      }
+      .head h1 { font-size: 19px; margin: 0 0 2px; font-weight: 700; letter-spacing: 0.2px; }
+      .head .sub { color: var(--muted); font-size: 12.5px; }
+      .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #c8ced8; margin-right: 6px; vertical-align: 1px; }
+      .dot.on { background: var(--idle); box-shadow: 0 0 0 3px rgba(46, 158, 79, 0.16); }
+      .dot.off { background: var(--danger); box-shadow: 0 0 0 3px rgba(217, 79, 61, 0.14); }
+
+      /* ---------- 卡片 ---------- */
+      .card {
+        background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 16px 18px; margin-bottom: 14px; box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03);
+      }
+      .card h2 { font-size: 14px; margin: 0 0 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+      .card h2 .tag { font-size: 11px; font-weight: 500; color: var(--muted); background: var(--brand-soft); color: var(--brand); padding: 1px 8px; border-radius: 999px; }
+      .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; }
+      .row + .row { border-top: 1px dashed var(--line); }
+      .row .k { color: var(--muted); font-size: 13px; flex: none; }
+      .row .v { text-align: right; font-size: 13px; word-break: break-all; }
+
+      /* ---------- 余额 ---------- */
+      .balance { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+      .amount { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.1; }
+      .amount .cur { font-size: 17px; font-weight: 600; color: var(--muted); margin-right: 3px; }
+      .tier { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+      .tier.peak { color: var(--peak); background: rgba(229, 57, 53, 0.1); }
+      .tier.idle { color: var(--idle); background: rgba(46, 158, 79, 0.1); }
+      .hint { color: var(--muted); font-size: 12.5px; margin-top: 8px; }
+      .err { color: var(--danger); font-size: 12.5px; margin-top: 6px; word-break: break-all; }
+      .mono { font-family: Consolas, 'Courier New', monospace; font-size: 12.5px; }
+
+      /* ---------- 表单 ---------- */
+      input[type='password'], input[type='text'] {
+        width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px;
+        font-size: 13px; font-family: Consolas, monospace; background: #fbfcfe; color: var(--text); outline: none;
+      }
+      input[type='password']:focus, input[type='text']:focus { border-color: var(--brand); background: #fff; box-shadow: 0 0 0 3px var(--brand-soft); }
+      .inputline { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+      .inputline .grow { flex: 1; min-width: 0; }
+
+      button {
+        border: 1px solid var(--line); background: #fff; color: var(--text);
+        padding: 8px 15px; border-radius: 10px; font-size: 13px; cursor: pointer;
+        font-family: inherit; transition: all 0.15s ease; white-space: nowrap;
+      }
+      button:hover { border-color: #c9d3e8; background: #f7f9ff; }
+      button.primary { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600; }
+      button.primary:hover { background: #1f55e6; border-color: #1f55e6; }
+      button.ghost { background: transparent; }
+      button.danger { color: var(--danger); border-color: rgba(217, 79, 61, 0.35); }
+      button.danger:hover { background: rgba(217, 79, 61, 0.07); border-color: rgba(217, 79, 61, 0.55); }
+      button:disabled { opacity: 0.5; cursor: default; }
+      .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+      select {
+        padding: 6px 10px; border: 1px solid var(--line); border-radius: 10px;
+        font-size: 13px; font-family: inherit; background: #fbfcfe; color: var(--text); outline: none;
+      }
+      select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+      select:disabled { opacity: 0.5; }
+
+      /* ---------- 开关 ---------- */
+      .switch { position: relative; width: 44px; height: 24px; flex: none; }
+      .switch input { opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+      .slider {
+        position: absolute; inset: 0; background: #cfd6e4; border-radius: 999px; transition: 0.18s; pointer-events: none;
+      }
+      .slider::after {
+        content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%;
+        background: #fff; transition: 0.18s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .switch input:checked + .slider { background: var(--brand); }
+      .switch input:checked + .slider::after { transform: translateX(20px); }
+
+      input[type='range'] { width: 100%; accent-color: var(--brand); }
+
+      /* ---------- 日志 ---------- */
+      pre.log {
+        margin: 8px 0 0; padding: 10px 12px; background: #0f1524; color: #cbd5e1;
+        border-radius: 10px; font-family: Consolas, monospace; font-size: 11.5px; line-height: 1.55;
+        max-height: 220px; overflow: auto; white-space: pre-wrap; word-break: break-all;
+      }
+      details summary { cursor: pointer; color: var(--muted); font-size: 13px; user-select: none; }
+
+      /* ---------- 提示 ---------- */
+      #toast {
+        position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px);
+        background: #1f2430; color: #fff; padding: 9px 18px; border-radius: 999px; font-size: 13px;
+        opacity: 0; transition: all 0.22s ease; pointer-events: none; max-width: 88vw; text-align: center;
+      }
+      #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+      #toast.ok { background: #17754a; }
+      #toast.bad { background: #a63a2c; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="head">
+        <div class="logo">🐳</div>
+        <div>
+          <h1>DS小鲸鱼</h1>
+          <div class="sub">
+            <span id="statusDot" class="dot"></span><span id="statusText">正在读取状态…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 余额 -->
+      <div class="card">
+        <h2>DeepSeek 余额 <span class="tag" id="tierTag" hidden></span></h2>
+        <div class="balance">
+          <div class="amount" id="amount"><span class="cur">¥</span><span id="amountNum">--</span></div>
+          <div class="hint" id="tierHint" style="margin: 0 0 4px"></div>
+        </div>
+        <div class="hint" id="balanceMeta">—</div>
+        <div class="err" id="balanceErr" hidden></div>
+        <div class="btns">
+          <button id="btnRefresh">立即刷新</button>
+          <button class="ghost" id="btnOpenLog">查看日志</button>
+        </div>
+      </div>
+
+      <!-- 密钥 -->
+      <div class="card">
+        <h2>API Key</h2>
+        <div class="hint" style="margin: 0 0 6px">
+          用于查询 DeepSeek 余额。密钥只保存在本机 <span class="mono">standalone\credential.json</span>，不会上传到任何地方。
+          <span id="keyState"></span>
+        </div>
+        <div class="inputline">
+          <input class="grow" id="keyInput" type="password" placeholder="sk-…（粘贴你的 DeepSeek API Key）" spellcheck="false" />
+          <button class="ghost" id="btnEye">显示</button>
+        </div>
+        <div class="btns">
+          <button class="primary" id="btnSaveKey">保存并验证</button>
+          <button class="ghost" id="btnClearKey">清空</button>
+        </div>
+      </div>
+
+      <!-- 外观 -->
+      <div class="card">
+        <h2>外观</h2>
+        <div class="row">
+          <span class="k">桌宠大小</span>
+          <span class="v" id="scaleVal">1.00×</span>
+        </div>
+        <input type="range" id="scaleRange" min="0.6" max="1.6" step="0.05" value="1" />
+        <div class="hint">改动在<b>重启桌宠</b>后生效。</div>
+        <div class="btns">
+          <button id="btnScaleSave">保存并重启</button>
+        </div>
+      </div>
+
+      <!-- 音效 -->
+      <div class="card">
+        <h2>点击音效</h2>
+        <div class="row">
+          <span class="k">点击桌宠时播放音效</span>
+          <span class="switch"><input type="checkbox" id="soundOn" /><span class="slider"></span></span>
+        </div>
+        <div class="row">
+          <span class="k">音效风格</span>
+          <span class="v">
+            <select id="soundSet">
+              <option value="duck">小黄鸭</option>
+              <option value="dingdong">叮咚</option>
+            </select>
+          </span>
+        </div>
+        <div class="row">
+          <span class="k">音量</span>
+          <span class="v" id="volVal">68%</span>
+        </div>
+        <input type="range" id="volRange" min="0" max="1" step="0.01" value="0.68" />
+        <div class="btns">
+          <button id="btnTestSound">试听</button>
+        </div>
+        <div class="hint">
+          按下与松开各响一声，手感与原版 DS 小鲸鱼一致。<b>改动立即生效</b>，不需要重启桌宠。
+        </div>
+      </div>
+
+      <!-- 启动 -->
+      <div class="card">
+        <h2>启动方式</h2>
+        <div class="row">
+          <span class="k">开机自动启动</span>
+          <span class="switch"><input type="checkbox" id="autostart" /><span class="slider"></span></span>
+        </div>
+        <div class="row">
+          <span class="k">桌面快捷方式</span>
+          <span class="v mono" id="shortcutPath">—</span>
+        </div>
+        <div class="btns">
+          <button id="btnShortcut">创建 / 修复桌面快捷方式</button>
+        </div>
+        <div class="hint">双击桌面上的「DS小鲸鱼」即可启动，不会出现任何命令行窗口。</div>
+      </div>
+
+      <!-- 文件 -->
+      <div class="card">
+        <h2>文件位置</h2>
+        <div class="row"><span class="k">程序目录</span><span class="v mono" id="pRoot">—</span></div>
+        <div class="row"><span class="k">数据目录</span><span class="v mono" id="pData">—</span></div>
+        <div class="row"><span class="k">配置文件</span><span class="v mono" id="pConfig">—</span></div>
+        <div class="btns">
+          <button class="ghost" id="btnOpenData">打开数据目录</button>
+          <button class="ghost" id="btnOpenConfig">打开配置文件</button>
+        </div>
+      </div>
+
+      <!-- 日志 -->
+      <div class="card">
+        <h2>运行日志</h2>
+        <details>
+          <summary>展开最近 60 行（data\app.log）</summary>
+          <pre class="log" id="logBox">加载中…</pre>
+        </details>
+      </div>
+
+      <!-- 底部动作 -->
+      <div class="card">
+        <h2>程序</h2>
+        <div class="hint" style="margin-top: 0">
+          关闭本窗口<b>不会</b>退出桌宠——桌宠会继续留在桌面上。要彻底关闭，请点下面，或在桌宠身上右键 →「退出桌宠程序」。
+        </div>
+        <div class="btns">
+          <button id="btnRestart">重启桌宠</button>
+          <button class="danger" id="btnQuit">退出桌宠程序</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+      (function () {
+        var api = window.dsh || {};
+        var tierTimer = null;
+        var snapshot = null;
+
+        function $(id) { return document.getElementById(id); }
+
+        function toast(msg, kind) {
+          var el = $('toast');
+          el.textContent = msg;
+          el.className = 'show' + (kind ? ' ' + kind : '');
+          clearTimeout(el.__t);
+          el.__t = setTimeout(function () { el.className = ''; }, 3600);
+        }
+
+        function fmtSec(sec) {
+          sec = Math.max(0, Math.floor(sec));
+          var h = Math.floor(sec / 3600);
+          var m = Math.floor((sec % 3600) / 60);
+          var s = sec % 60;
+          var p = function (n) { return (n < 10 ? '0' : '') + n; };
+          return p(h) + ':' + p(m) + ':' + p(s);
+        }
+
+        function tierName(t) { return t === 'peak' ? '峰' : '谷'; }
+
+        function renderBalance(b) {
+          var amountNum = $('amountNum');
+          var meta = $('balanceMeta');
+          var err = $('balanceErr');
+          var tag = $('tierTag');
+          var tierHint = $('tierHint');
+
+          if (!b || !b.known) {
+            amountNum.textContent = '--';
+            meta.textContent = '尚未取到余额数据（服务刚启动时会立刻查一次）';
+            err.hidden = true;
+            tag.hidden = true;
+            tierHint.textContent = '';
+            return;
+          }
+          if (!b.ok) {
+            amountNum.textContent = '--';
+            meta.textContent = '余额不可用';
+            err.hidden = false;
+            err.textContent = '原因：' + (b.reason || '未知') + (b.message ? ' — ' + b.message : '');
+            tag.hidden = true;
+            tierHint.textContent = '';
+            return;
+          }
+          err.hidden = true;
+          amountNum.textContent = Number(b.total).toFixed(2);
+          tag.hidden = false;
+          tag.textContent = tierName(b.tier);
+          tag.className = 'tag tier ' + b.tier;
+          tierHint.innerHTML = '当前处于<b>' + tierName(b.tier) + '时段</b>计价' +
+            (b.next ? '，距离切换到' + tierName(b.next.tier) + '时段还有 <b id="cd">' + fmtSec(b.next.sec) + '</b>' : '');
+          meta.textContent = '赠送 ¥' + b.granted + ' · 充值 ¥' + b.toppedUp + ' · 第 ' + b.counter + ' 次刷新';
+          if (b.next) {
+            var deadline = Date.now() + b.next.sec * 1000;
+            clearInterval(tierTimer);
+            tierTimer = setInterval(function () {
+              var cd = $('cd');
+              if (!cd) return clearInterval(tierTimer);
+              cd.textContent = fmtSec((deadline - Date.now()) / 1000);
+            }, 1000);
+          } else {
+            clearInterval(tierTimer);
+          }
+        }
+
+        function render(o) {
+          snapshot = o;
+          var ready = o.server && o.server.ready;
+          $('statusDot').className = 'dot ' + (ready ? 'on' : 'off');
+          $('statusText').textContent = ready
+            ? '运行中 · 端口 ' + o.server.port + ' · 已运行 ' + Math.floor(o.app.uptimeSec / 60) + ' 分钟'
+            : '本地服务未就绪';
+
+          renderBalance(o.balance);
+
+          $('keyState').innerHTML = o.key.has
+            ? '当前已保存：<b>••••' + o.key.tail + '</b>'
+            : '<b style="color:#d94f3d">尚未设置</b>';
+          $('keyInput').placeholder = o.key.has ? '已保存（••••' + o.key.tail + '），输入新值可覆盖' : 'sk-…（粘贴你的 DeepSeek API Key）';
+
+          var scale = o.prefs.scale || 1;
+          $('scaleRange').value = scale;
+          $('scaleVal').textContent = Number(scale).toFixed(2) + '×';
+          $('autostart').checked = !!o.prefs.autostart;
+
+          // 音效：三项均立即生效，这里只回读展示；不整组 disable 以免和 switch 状态打架
+          $('soundOn').checked = o.prefs.sound !== false;
+          $('soundSet').value = o.prefs.soundSet || 'duck';
+          var vol = typeof o.prefs.vol === 'number' ? o.prefs.vol : 0.68;
+          if (document.activeElement !== $('volRange')) $('volRange').value = vol;
+          $('volVal').textContent = Math.round(Number($('volRange').value) * 100) + '%';
+          $('soundSet').disabled = !$('soundOn').checked;
+          $('volRange').disabled = !$('soundOn').checked;
+          $('btnTestSound').disabled = !$('soundOn').checked;
+
+          $('shortcutPath').textContent = o.shortcut.exists ? o.shortcut.path : '（尚未创建）';
+          $('pRoot').textContent = o.app.root;
+          $('pData').textContent = o.files.dataDir;
+          $('pConfig').textContent = o.files.config;
+          $('logBox').textContent = o.logTail || '（暂无日志）';
+        }
+
+        function load() {
+          return api.get().then(render).catch(function (e) {
+            $('statusText').textContent = '读取状态失败：' + (e && e.message);
+          });
+        }
+
+        /* ---- 事件绑定 ---- */
+        $('btnRefresh').addEventListener('click', function () {
+          var b = this;
+          b.disabled = true;
+          api.refresh().then(function (r) {
+            toast(r.message, r.ok ? 'ok' : 'bad');
+            return load();
+          }).finally(function () { b.disabled = false; });
+        });
+
+        $('btnEye').addEventListener('click', function () {
+          var i = $('keyInput');
+          var show = i.type === 'password';
+          i.type = show ? 'text' : 'password';
+          this.textContent = show ? '隐藏' : '显示';
+        });
+
+        $('btnSaveKey').addEventListener('click', function () {
+          var v = $('keyInput').value.trim();
+          if (!v) return toast('请先粘贴 API Key', 'bad');
+          var b = this;
+          b.disabled = true;
+          b.textContent = '验证中…';
+          api.setKey(v).then(function (r) {
+            toast(r.message, r.ok ? 'ok' : 'bad');
+            $('keyInput').value = '';
+            return load();
+          }).catch(function (e) {
+            toast('保存失败：' + (e && e.message), 'bad');
+          }).finally(function () {
+            b.disabled = false;
+            b.textContent = '保存并验证';
+          });
+        });
+
+        $('btnClearKey').addEventListener('click', function () {
+          api.setKey('').then(function (r) {
+            toast(r.message || '已清空', 'ok');
+            return load();
+          });
+        });
+
+        $('scaleRange').addEventListener('input', function () {
+          $('scaleVal').textContent = Number(this.value).toFixed(2) + '×';
+        });
+
+        $('btnScaleSave').addEventListener('click', function () {
+          var v = Number($('scaleRange').value);
+          api.setScale(v).then(function (r) {
+            toast('已保存为 ' + Number(r.scale).toFixed(2) + '×，正在重启…', 'ok');
+            setTimeout(function () { api.restart(); }, 700);
+          });
+        });
+
+        $('autostart').addEventListener('change', function () {
+          var v = this.checked;
+          api.setAutostart(v).then(function () {
+            toast(v ? '已开启开机自动启动' : '已关闭开机自动启动', 'ok');
+          });
+        });
+
+        /* ---- 音效（三项均立即生效；试听直接在设置窗口播，靠 media-src http:） ---- */
+        function testSound(kind) {
+          if (!snapshot || !snapshot.app || !snapshot.app.base) return;
+          var set = $('soundSet').value || 'duck';
+          var vol = Number($('volRange').value);
+          try {
+            var a = new Audio(snapshot.app.base + '/sound/' + set + '-' + (kind || 'press') + '.mp3');
+            a.volume = Math.max(0, Math.min(1, isFinite(vol) ? vol : 0.68));
+            var p = a.play();
+            if (p && p.catch) p.catch(function () {});
+          } catch (e) {
+            /* 忽略 */
+          }
+        }
+
+        $('soundOn').addEventListener('change', function () {
+          var v = this.checked;
+          api.setSound(v).then(function () {
+            toast(v ? '已开启点击音效' : '已关闭点击音效', 'ok');
+            return load();
+          }).then(function () {
+            if (v) testSound('press');
+          });
+        });
+
+        $('soundSet').addEventListener('change', function () {
+          var v = this.value;
+          api.setSoundSet(v).then(function () {
+            toast('音效风格：' + (v === 'dingdong' ? '叮咚' : '小黄鸭'), 'ok');
+            testSound('press');
+          });
+        });
+
+        $('volRange').addEventListener('input', function () {
+          $('volVal').textContent = Math.round(Number(this.value) * 100) + '%';
+        });
+        $('volRange').addEventListener('change', function () {
+          api.setVolume(Number(this.value)).then(function () {
+            testSound('release');
+          });
+        });
+
+        $('btnTestSound').addEventListener('click', function () {
+          testSound('press');
+        });
+
+        $('btnShortcut').addEventListener('click', function () {
+          api.createShortcut().then(function (r) {
+            toast(r.ok ? '已创建：' + r.path : '创建失败：' + (r.message || ''), r.ok ? 'ok' : 'bad');
+            return load();
+          });
+        });
+
+        $('btnOpenData').addEventListener('click', function () { api.openPath('data'); });
+        $('btnOpenConfig').addEventListener('click', function () { api.openPath('config'); });
+        $('btnOpenLog').addEventListener('click', function () {
+          api.openPath('log');
+          var d = document.querySelector('details');
+          if (d) d.open = true;
+        });
+
+        $('btnRestart').addEventListener('click', function () {
+          toast('正在重启桌宠…', 'ok');
+          setTimeout(function () { api.restart(); }, 400);
+        });
+
+        $('btnQuit').addEventListener('click', function () {
+          if (!confirm('确定要退出桌宠程序吗？桌宠会从桌面上消失。')) return;
+          api.quit();
+        });
+
+        load();
+        setInterval(function () {
+          if (document.visibilityState === 'visible') load();
+        }, 5000);
+      })();
+    </script>
+  </body>
+</html>
